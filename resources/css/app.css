@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+    h1 {
+        @apply font-medium leading-tight text-5xl mt-0 mb-2;
+    }
+
+    form {
+        @apply mt-4;
+    }
+
+}

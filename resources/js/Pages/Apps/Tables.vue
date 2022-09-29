@@ -18,7 +18,7 @@ const form = useForm({
     <AuthenticatedLayout>
         <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
 
-            <h1>Tables</h1>
+            <h1>{{ app.tables.length }} {{ app.tables.length === 1 ? "Table" : "Tables" }}</h1>
 
             <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
                 <Table

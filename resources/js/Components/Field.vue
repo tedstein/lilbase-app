@@ -15,6 +15,7 @@ dayjs.extend(relativeTime);
 const props = defineProps(['field', 'app', 'table', 'types']);
 const form = useForm({
     name: props.field.name,
+    type: props.field.type,
 });
 const editing = ref(false);
 
@@ -60,8 +61,25 @@ const editing = ref(false);
 
             </div>
 
-            <form v-if="editing" @submit.prevent="form.put(route('fields.update', field.slug), { onSuccess: editing = false })">
-                <textarea v-model="form.name" class="mt-4 w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"></textarea>
+            <form
+                v-if="editing"
+                @submit.prevent="form.put(
+                    route('fields.update', { field: field.slug, table: table.slug, app: app.slug }),
+                { onSuccess: editing = false })
+            ">
+
+                <input type="text" id="field-name"
+                       v-model="form.name"
+                       class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                >
+
+                <select
+                    v-model="form.type"
+                    class="mt-4 block border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                >
+                    <option v-for="(human, machine) in types" :value="machine">{{ human }}</option>
+                </select>
+
                 <InputError :name="form.errors.name" class="mt-2" />
                 <div class="space-x-2">
                     <PrimaryButton class="mt-4">Save</PrimaryButton>

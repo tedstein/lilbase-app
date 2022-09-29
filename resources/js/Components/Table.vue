@@ -57,13 +57,20 @@ const editing = ref(false);
 
             </div>
 
-            <form v-if="editing" @submit.prevent="form.put(route('tables.update', table.slug), { onSuccess: editing = false })">
-                <textarea v-model="form.name" class="mt-4 w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"></textarea>
+            <form v-if="editing" @submit.prevent="form.put(route('tables.update', { app: app.slug, table: table.slug }), { onSuccess: editing = false })">
+
+                <input type="text" id="field-name"
+                       v-model="form.name"
+                       class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                >
+
                 <InputError :name="form.errors.name" class="mt-2" />
+
                 <div class="space-x-2">
                     <PrimaryButton class="mt-4">Save</PrimaryButton>
                     <button class="mt-4" @click="editing = false; form.reset()">Cancel</button>
                 </div>
+
             </form>
 
             <p v-else class="mt-4 text-lg text-gray-900">

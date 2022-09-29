@@ -18,6 +18,7 @@ class Field extends Model
             'text' => 'Long Text',
             'number' => 'Number',
             'date' => 'Date',
+            'file' => 'File',
         ];
 
     protected $fillable = [

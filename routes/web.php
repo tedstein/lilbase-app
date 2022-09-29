@@ -44,7 +44,7 @@ Route::prefix('apps/{app}')->group(function () {
     Route::prefix('{table}')->group(function () {
 
         Route::resource('fields', FieldController::class)
-            ->only(['index', 'store', 'destroy'])
+            ->only(['index', 'store', 'destroy', 'update'])
             ->middleware(['auth', 'verified']);
 
     });

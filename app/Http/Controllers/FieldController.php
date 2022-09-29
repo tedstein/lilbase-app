@@ -50,9 +50,15 @@ class FieldController extends Controller
         //
     }
 
-    public function update(Request $request, Field $field)
+    public function update(Request $request, App $app, Table $table, Field $field)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => 'required|string|max:255'
+        ]);
+
+        $field->update($validated);
+
     }
 
     public function destroy(Field $field)

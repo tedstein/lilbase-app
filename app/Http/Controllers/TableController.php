@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\App;
+use App\Models\Field;
 use App\Models\Table;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,8 +12,6 @@ class TableController extends Controller
 {
     public function index(Request $request, App $app)
     {
-        $request->session()->put('app', $app);
-
         $app->load('tables.fields');
 
         foreach ($app->tables as $table)
@@ -28,13 +27,11 @@ class TableController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(Request $request, App $app)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
         ]);
-
-        $app = App::find($request->session()->get('app')->id);
 
         $validated['app'] = $app->id;
         $app->tables()->create($validated);
@@ -42,19 +39,24 @@ class TableController extends Controller
         return redirect(route('tables.index', $app->slug));
     }
 
-    public function show($id)
+    public function show(Field $field)
     {
-        //
+        $field->load('table.app');
+        dd($field);
     }
 
     public function edit($id)
     {
-        //
+
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, App $app, Table $table)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $table->update($validated);
     }
 
     public function destroy(Request $request, App $app, Table $table)
